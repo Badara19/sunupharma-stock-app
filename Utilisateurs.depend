@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1751808073 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\utilisateurs\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Users.h"
+
+1751808352 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\utilisateurs\users.h
+
+1752096676 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\src\users.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Users.h"
+
+1751808352 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\src\users.h
+
+1752097846 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Users.h"
+
