@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1752367600 source:c:\users\dell\documents\codeblocks\project\notes\sunupharma\main.c
+	<stdio.h>
+	<stdlib.h>
+	"products.h"
+
+1752370727 source:c:\users\dell\documents\codeblocks\project\notes\sunupharma\products.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"products.h"
+
+1752370611 c:\users\dell\documents\codeblocks\project\notes\sunupharma\products.h
+
