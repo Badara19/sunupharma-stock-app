@@ -24,6 +24,7 @@ void modifierProduit();
 void supprimerProduit();
 void afficheProduit();
 void rechercherProduitParCode();
+void miseAJourStockApresAchat();
 void menu();
 
 #endif // PRODUITS_H_INCLUDED

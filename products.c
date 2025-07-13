@@ -327,6 +327,46 @@ void rechercherProduitParCode() {
 
     fclose(f);
 }
+
+void miseAJourStockApresAchat() {
+    FILE *f = fopen("PRODUCTS.dat", "r+b");
+    verification(f);
+
+    char code[6];
+    int quantite;
+
+    printf("Entrez le code du produit : ");
+    fgets(code, sizeof(code), stdin);
+    code[strcspn(code, "\n")] = 0;
+
+    printf("Quantite achetee : ");
+    scanf("%d", &quantite);
+    getchar(); // pour vider le buffer
+
+    struct produits p;
+    int trouve = 0;
+
+    while (fread(&p, sizeof(struct produits), 1, f) == 1) {
+        if (strcmp(p.code, code) == 0) {
+            trouve = 1;
+            if (p.quantiteStock >= quantite) {
+                p.quantiteStock -= quantite;
+                fseek(f, -sizeof(struct produits), SEEK_CUR);
+                fwrite(&p, sizeof(struct produits), 1, f);
+                printf("Stock mis a jour. Nouveau stock : %d\n", p.quantiteStock);
+            } else {
+                printf("Stock insuffisant. Stock disponible : %d\n", p.quantiteStock);
+            }
+            break;
+        }
+    }
+
+    if (!trouve) {
+        printf("Produit non trouve.\n");
+    }
+
+    fclose(f);
+}
 void menu() {
     int choix;
     int nbProd = 0, nbCat = 0;
@@ -344,7 +384,8 @@ void menu() {
         printf("7. Modifier produit\n");
         printf("8. Supprimer produit\n");
         printf("9. Rechercher un produit\n");
-        printf("10. Quitter\n");
+        printf("10.Mise a jour stock apres achat\n");
+        printf("0. Quitter\n");
         printf("==================\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
@@ -367,8 +408,9 @@ void menu() {
             case 7: modifierProduit(nomFichier); break;
             case 8: supprimerProduit(nomFichier); break;
             case 9: rechercherProduitParCode();break;
-            case 10: printf("Fin du programme.\n"); break;
+            case 10: miseAJourStockApresAchat(); break;
+            case 0: printf("Fin du programme\n");break;
             default: printf("Choix invalide.\n");
         }
-    } while (choix != 10);
+    } while (choix != 0);
 }

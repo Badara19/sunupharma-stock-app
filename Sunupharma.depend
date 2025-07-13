@@ -12,3 +12,16 @@
 
 1752370611 c:\users\dell\documents\codeblocks\project\notes\sunupharma\products.h
 
+1752373106 source:c:\users\dell\documents\codeblocks\project\sunupharma-projet\main.c
+	<stdio.h>
+	<stdlib.h>
+	"products.h"
+
+1752428893 c:\users\dell\documents\codeblocks\project\sunupharma-projet\products.h
+
+1752429151 source:c:\users\dell\documents\codeblocks\project\sunupharma-projet\products.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"products.h"
+
