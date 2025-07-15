@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1752590984 source:c:\users\sene\documents\adobe\photoshop cloud associates\onedrive\desktop\langage c\sunupharma\main.c
+	<stdio.h>
+	<stdlib.h>
+	"sales.h"
+
+1752593962 c:\users\sene\documents\adobe\photoshop cloud associates\onedrive\desktop\langage c\sunupharma\sales.h
+
+1752593241 source:c:\users\sene\documents\adobe\photoshop cloud associates\onedrive\desktop\langage c\sunupharma\sales.c
+	"sales.h"
+	<stdio.h>
+	<string.h>
+	<time.h>
+	<stdlib.h>
+
