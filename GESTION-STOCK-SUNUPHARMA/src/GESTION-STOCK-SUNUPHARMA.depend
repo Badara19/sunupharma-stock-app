@@ -1,0 +1,118 @@
+# depslib dependency file v1.0
+1753240532 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\categories.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753227342 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\utils.h
+	<stdio.h>
+	<time.h>
+
+1753122555 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\colors.h
+
+1753229798 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\users.h
+
+1753226511 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\products.h
+	<stdbool.h>
+
+1753127946 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\categories.h
+
+1753225970 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\sales.h
+	"products.h"
+	"users.h"
+
+1753227930 c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\rapports.h
+
+1753227861 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\colors.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753240532 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<direct.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753240676 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\products.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdbool.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753238916 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\rapports.c
+	"rapports.h"
+	"sales.h"
+	"products.h"
+	"utils.h"
+	"colors.h"
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+
+1753240532 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\sales.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<time.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753227861 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\utils.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
+1753240532 source:c:\users\boiie\onedrive\desktop\groupe isi\licence 1\semestre 2\langage c\projet\gestion-stock-sunupharma\src\users.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"utils.h"
+	"colors.h"
+	"users.h"
+	"products.h"
+	"categories.h"
+	"sales.h"
+	"rapports.h"
+
