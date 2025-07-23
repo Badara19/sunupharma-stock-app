@@ -1,116 +1,120 @@
+#include "rapports.h"
+#include "sales.h"
+#include "products.h"
+#include "utils.h"
+#include "colors.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "rapport.h"
 
-     // Vérifie que le fichier est bien ouvert
-void verifFichier(FILE *fc) {
-    if (fc == NULL) {
-        printf("Erreur : fichier introuvable ou non cree.\n");
-        exit(1);
-    }
-}
+#define DOSSIER_BILLS "bills/"
 
-    // Crée ou ouvre le fichier rapport du jour en mode ajout
-FILE *ouvrirFichierRapport() {
-    char nomFichier[40];
-    time_t tmp = time(NULL);
-    struct tm *date = localtime(&tmp);
-    strftime(nomFichier, sizeof(nomFichier), "ETAT_%Y%m%d.txt", date);
-
-    FILE *f = fopen(nomFichier, "a");
-    verifFichier(f);
-    return f;
-}
-
-    // Calcule le total des ventes du jour et l'affiche dans le rapport
-void venteJour() {
-    FILE *factures = fopen("FACTURES.dat", "rb");
-    verifFichier(factures);
-
-    struct Vente vente;
-    float totalJour = 0.0f;
-
-    time_t tmp = time(NULL);
-    struct tm *dateTmp = localtime(&tmp);
-    char dateToday[10];
-    strftime(dateToday, sizeof(dateToday), "%Y%m%d", dateTmp);
-
-    while (fread(&vente, sizeof(struct Vente), 1, factures) == 1) {
-        char dateVente[9] = {0};
-        strncpy(dateVente, vente.numero_vente, 8);
-
-        if (strcmp(dateVente, dateToday) == 0) {
-            totalJour += vente.total_vente;
-        }
-    }
-    fclose(factures);
-
-    FILE *rapport = ouvrirFichierRapport();
-    fprintf(rapport, "Total des ventes du jour : %.3f FCFA\n", totalJour);
-    fclose(rapport);
-
-    printf("Total des ventes du jour : %.3f FCFA\n", totalJour);
-}
-
-    // Calcule le nombre total de médicaments vendus ce jour et l'écrit dans le rapport
-void nbrMedVendu() {
-    FILE *factures = fopen("FACTURES.dat", "rb");
-    verifFichier(factures);
-
-    struct Vente vente;
-    int totalMed = 0;
-
+void genererRapportJournalier(void) {
+    char nomFichier[128];
     time_t now = time(NULL);
     struct tm *dateNow = localtime(&now);
-    char dateToday[9];
-    strftime(dateToday, sizeof(dateToday), "%Y%m%d", dateNow);
+    strftime(nomFichier, sizeof(nomFichier), DOSSIER_BILLS "../bills/ETAT_%Y%m%d.txt", dateNow);
 
-    while (fread(&vente, sizeof(struct Vente), 1, factures) == 1) {
-        char dateVente[9] = {0};
-        strncpy(dateVente, vente.numero_vente, 8);
+    FILE *fVentes = fopen(FICHIER_VENTES, "rb");
+    verifFichier(fVentes);
 
-        if (strcmp(dateVente, dateToday) == 0) {
-            for (int i = 0; i < vente.nb_produits; i++) {
-                totalMed += vente.produits[i].quantite;
-            }
-        }
-    }
-    fclose(factures);
+    FILE *fProduits = fopen(FICHIER_PRODUITS, "rb");
+    verifFichier(fProduits);
 
-    FILE *rapport = ouvrirFichierRapport();
-    fprintf(rapport, "Nombre total de medicaments vendus aujourd'hui : %d\n", totalMed);
-    fclose(rapport);
+    FILE *rapport = fopen(nomFichier, "w");
+    verifFichier(rapport);
 
-    printf("Nombre total de medicaments vendus aujourd'hui : %d\n", totalMed);
-}
+    float totalVentesJour = 0.0f;
+    int totalMedVendus = 0;
 
-    // Parcourt la liste des produits et affiche une alerte si stock est faible
-void alerteStock() {
-    FILE *produits = fopen("PRODUCTS.dat", "rb");
-    verifFichier(produits);
+    char dateToday[MAX_DATE];
+    strftime(dateToday, sizeof(dateToday), "%Y-%m-%d", dateNow);
 
-    FILE *rapport = ouvrirFichierRapport();
-
-    struct produits p;
-    const int seuil = 10; // seuil arbitraire pour alerte
-
-    while (fread(&p, sizeof(struct produits), 1, produits) == 1) {
-        if (p.quantiteStock < seuil) {
-            fprintf(rapport, "ALERTE: %s est bientot en rupture, il reste %d en stock !\n", p.designation, p.quantiteStock);
-            printf("ALERTE: %s est bientot en rupture, il reste %d en stock !\n", p.designation, p.quantiteStock);
+    sale vente;
+    while (fread(&vente, sizeof(sale), 1, fVentes) == 1) {
+        if (strcmp(vente.date, dateToday) == 0) {
+            totalMedVendus += vente.quantite;
+            totalVentesJour += vente.total_vente;
         }
     }
 
-    fclose(produits);
+    fprintf(rapport, "Rapport journalier du %s\n", dateToday);
+    fprintf(rapport, "-------------------------------------\n");
+    fprintf(rapport, "Total des ventes du jour : %.2f FCFA\n", totalVentesJour);
+    fprintf(rapport, "Nombre total de medicaments vendus : %d\n\n", totalMedVendus);
+
+    fprintf(rapport, "ALERTES STOCKS CRITIQUES (quantite < seuil) :\n");
+
+    produit p;
+    int alerteTrouvee = 0;
+    while (fread(&p, sizeof(produit), 1, fProduits) == 1) {
+        if (p.quantiteStock < p.seuil) {
+            fprintf(rapport, "- %s (stock actuel : %d, seuil critique : %d)\n", p.nom, p.quantiteStock, p.seuil);
+            alerteTrouvee = 1;
+        }
+    }
+    if (!alerteTrouvee) {
+        fprintf(rapport, "Aucune alerte stock.\n");
+    }
+
+    fclose(fVentes);
+    fclose(fProduits);
     fclose(rapport);
+
+    color_success("Rapport journalier genere avec succes\n");
 }
 
-    // Affichage du Rapport
-void rapport() {
-    printf("=== LE RAPPORT journalier ===\n");
-    venteJour();
-    nbrMedVendu();
-    alerteStock();
+void afficherRapportJournalier(void) {
+    char nomFichier[128];
+    time_t now = time(NULL);
+    struct tm *dateNow = localtime(&now);
+    strftime(nomFichier, sizeof(nomFichier), DOSSIER_BILLS "../bills/ETAT_%Y%m%d.txt", dateNow);
+
+    FILE *f = fopen(nomFichier, "r");
+    if (!f) {
+        color_error("Aucun rapport disponible pour aujourd hui.\n");
+        return;
+    }
+
+    char ligne[256];
+    puts("");
+    color_title("\n********** CONTENU DU RAPPORT JOURNALIER **********\n");
+    puts("");
+    while (fgets(ligne, sizeof(ligne), f)) {
+        printf("%s", ligne);
+    }
+    fclose(f);
+}
+
+void menuRapport(void) {
+    pauseEtNettoie();
+    int choix;
+    do {
+        puts("");
+        color_header("********** MENU RAPPORTS JOURNALIERS **********");
+        puts("");
+        printf("1. Generer le rapport journalier complet\n");
+        printf("2. Afficher le rapport journalier\n");
+        printf("0. Retour au menu principal\n");
+
+        choix = saisirEntierAvecMessage("\nEntrez votre choix [0-2] : ", 0, 2);
+        printf("\n");
+
+        switch (choix) {
+            case 1:
+                genererRapportJournalier();
+                break;
+            case 2:
+                afficherRapportJournalier();
+                break;
+            case 0:
+                color_success("Retour au menu principal...\n");
+                break;
+            default:
+                color_error("Choix invalide.\n");
+        }
+
+    } while (choix != 0);
 }
